@@ -1,0 +1,144 @@
+﻿@model dynamic 
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <a>
+                            <div class="card card-hover">
+                                <div class="box bg-primary text-center">
+                                    <h1 class="font-light text-white">
+                                        <i class="mdi mdi-alarm"></i>
+                                    </h1>
+                                    <h6 class="text-white" id="date"></h6>
+                                    <h6 class="text-white" id="time"></h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <a href=@Url.Action("Index","Patient")>
+                        <div class="card card-hover">
+                            <div class="box bg-success text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-chart-areaspline"></i>
+                                </h1>
+                                <h6 class="text-white">Patients</h6>
+                                <h6 class="text-white">@ViewBag.PatientCount</h6>
+                            </div>
+                        </div>
+                            </a>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-warning text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-book-open-page-variant"></i></h1>
+                                <h6 class="text-white">Appointments</h6>
+                                <h6 class="text-white">Count</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-danger text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-worker"></i>
+                                </h1>
+                                <h6 class="text-white">Doctors</h6>
+                                <h6 class="text-white">@ViewBag.DoctorCount</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-info text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-group"></i></h1>
+                                <h6 class="text-white">Departments</h6>
+                                <h6 class="text-white">Count</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-danger text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-hotel"></i></h1>
+                                <h6 class="text-white">Rooms</h6>
+                                <h6 class="text-white">Count</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-info text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-file-document"></i>
+                                </h1>
+                                <h6 class="text-white">Reports</h6>
+                                <h6 class="text-white">Count</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-cyan text-center">
+                                <h1 class="font-light text-white"><i class="mdi mdi-receipt"></i></h1>
+                                <h6 class="text-white">Bills</h6>
+                                <h6 class="text-white">Count</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-success text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-calendar-check"></i>
+                                </h1>
+                                <h6 class="text-white">Calnedar</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+
+                    <!-- Column -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    //document.getElementById("date1").innerHTML = date + ' <br> Day :- ' + daylist[day];
+    var dateElement = document.getElementById('date');
+    var clockElement = document.getElementById('time');
+
+    function clock() {
+        var today = new Date();
+        var day = today.getDay();
+        var month = today.getMonth();
+        var monthlist = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var daylist = ["Sun", "Mon", "Tue", "Wed ", "Thu", "Fri", "Sat"];
+        var date = today.getDate() + '-' + monthlist[month] + '-' + today.getFullYear();
+        dateElement.textContent = daylist[day]+", "+ date  ;
+        clockElement.textContent = today.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    }
+
+    setInterval(clock, 1000);
+
+</script>

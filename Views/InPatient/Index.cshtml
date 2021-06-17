@@ -1,0 +1,176 @@
+﻿@model IEnumerable<MVC_Demo.Models.Inpatients>
+<script src="~Content/assets/libs/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/test/wp-content/themes/child/script/jquery.jcarousel.min.js"></script>
+
+<div class="container" id="blur">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h2 class="page-title">InPatient</h2>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href=@Url.Action("Index","DashBoard")>Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">InPatient</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card" style="margin:10px 0 0 0">
+        <div class="card-body" style="margin: 0 0 0 50px">
+            <a class="  btn btn-warning btn-rounded " href="@Url.Action("Create","InPatient")" style="color:black">Add New InPatient</a>
+        </div>
+    </div>
+
+    <div class="card" style="margin:10px 0 0 0">
+        <div class="card-body">
+            <h5 class="card-title">Data Base</h5>
+            <div class="table-responsive">
+                <table id="zero_config" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th><span class="font-bold">@Html.DisplayNameFor(model => model.Pid)           </span> </th>
+                            <th><span class="font-bold">@Html.DisplayNameFor(model => model.Room_No)       </span> </th>
+                            <th><span class="font-bold">@Html.DisplayNameFor(model => model.Doctor_Id)     </span> </th>
+                            <th><span class="font-bold">@Html.DisplayNameFor(model => model.Admission_Date)</span></th>
+                            <th><span class="font-bold">@Html.DisplayNameFor(model => model.Discharge_Date)</span></th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Details","InPatient",new {id=item.Pid })">   @Html.DisplayFor(modelItem => item.Pid)</a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Room_No)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Doctor_Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Admission_Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Discharge_Date)
+                                </td>
+                                <td>
+                                    <a class="btn-rounded sidebar-link waves-effect waves-dark sidebar-link" onclick="setdelete(@item.Pid)" aria-expanded="false" style="color:red">
+                                        <i class="mdi mdi-delete " style="font-size:20px"></i>
+                                    </a>
+                                    <a class="btn-rounded sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false" href=@Url.Action("Edit","InPatient",new {id=item.Pid,admissionDate=item.Admission_Date })>
+                                        <i class="mdi mdi-pencil" style="font-size:20px"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div id="popup">
+    <h3>Are you sure, you want to delete record?</h3>
+    <div style="position: relative; display: flex; justify-content: space-around; align-items: stretch; padding: 40px 0 0 0">
+        <a style="width:100px" class="btn btn-danger btn-rounded text-white" href="#" onclick="deletep()">Yes</a>
+        <a style="width:100px" class="btn btn-info btn-rounded " href="#" onclick="toggle()">No</a>
+    </div>
+</div>
+<script>
+	$(document).ready(function () {
+		var PatientId;
+
+	})
+
+	function setdelete(id) {
+		InPatientId = id;
+		toggle();
+		console.log(id);
+		$("#hiddenEmployeeId").val(id);
+	}
+
+	function Pdelete() {
+		$.ajax({
+			type: "POST",
+            url: "/InPatient/Delete/" + InPatientId,
+			/*data: JSON.stringify(Student),*/
+			dataType: "json" ,
+			contentType: 'application/json; charset=utf-8',
+			success: function (data) {
+
+			},
+
+		});
+		toggle();
+		nav();
+	}
+
+
+	function deletep() {
+		deleted();
+		toggle();
+	}
+	function toggle() {
+		var blur = document.getElementById('blur');
+		blur.classList.toggle('active');
+		var popup = document.getElementById('popup');
+		popup.classList.toggle('active');
+	}
+	function deleted() {
+        toastr.warning(' has been deleted', 'Appointment Details ');
+	}
+	function deletefail() {
+        toastr.error('failed', 'Appointment Delete ');
+		setTimeout(nav, 2000);
+	}
+	function edit() {
+        toastr.warning('has  been updated', 'Appointment Details ');
+	}
+	function save() {
+        toastr.success('has  been added', 'Appointment Details ');
+	}
+	function nav() {
+		window.location.href = '@Url.Action("Index", "InPatient")';
+	}
+    function httperror() {
+        toastr.warning('Connect to Database', 'Unable to');
+    }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+		$(document).ready(function () {
+			if (@TempData["InPatient"] == "1") {
+				save.call();
+			}
+			if (@TempData["InPatient"] == "-1") {
+                httperror.call();
+			}
+			else if (@TempData["InPatient"] == "2") {
+				edit.call();
+			}
+			else if (@TempData["InPatient"] == "3") {
+				deleted.call();
+			}
+
+
+		console.log(@TempData["InPatient"])
+		})
+    </script>
+}

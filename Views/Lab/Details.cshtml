@@ -1,0 +1,72 @@
+﻿@model MVC_Demo.Models.Lab_Information
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h2 class="page-title">View Lab</h2>
+            <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","DashBoard")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Lab")">Lab</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">View</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin:10px 0 0 0">
+    <div class="col-12">
+        <div class="card">
+            <form class="form-horizontal">
+                <div class="card-body">
+                    <h4 class="card-title">Lab Info</h4>
+
+                    <div class="form-group row">
+                        <label for="lname" class="col-sm-3 text-end control-label col-form-label">
+                            Lab Name
+                        </label>
+                        <div class="col-sm-5">
+                            @Html.EditorFor(model => model.LabTestName, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lname"
+                               class="col-sm-3 text-end control-label col-form-label">Price</label>
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon1">₹</span>
+                                </div>
+                                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control aria-describedby = " + "basic - addon2" } })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group row align-content-between">
+                    <div class="card-body text-center">
+                        <a class="col-sm-2  btn btn-warning btn-rounded " href="@Url.Action("Index","Lab")" style="color:black">Go Back</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function save() {
+        toastr.success('abc has been created', 'Lab Details for');
+        setTimeout(nav, 2000);
+    }
+
+    function nav() {
+        window.location.href = '@Url.Action("Index", "Lab")';
+    }
+</script>

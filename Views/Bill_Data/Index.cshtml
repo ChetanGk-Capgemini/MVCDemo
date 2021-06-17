@@ -1,0 +1,144 @@
+﻿@model IEnumerable<MVC_Demo.Models.Bills>
+
+<div class="container" id="blur">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h2 class="page-title">Bills</h2>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index","DashBoard")">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Bills</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin:10px 0 0 0">
+        <div class="card-body" style="margin: 0 0 0 50px">
+            <a class="  btn btn-warning btn-rounded " href="@Url.Action("Create","Bill_Data")" style="color:black">Add New Bill</a>
+        </div>
+    </div>
+
+
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Data Base</h5>
+            <div class="table-responsive">
+                <table id="zero_config" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="font-bold"> @Html.DisplayNameFor(model => model.Bill_No) </span>
+                            </th>
+                            <th>
+                                <span class="font-bold">  @Html.DisplayNameFor(model => model.Pid)</span>
+                            </th>
+                            <th>
+                                <span class="font-bold">  @Html.DisplayNameFor(model => model.Bill_Date)</span>
+                            </th>
+                            <th>
+                                <span class="font-bold">  @Html.DisplayNameFor(model => model.Doctor_Id)</span>
+                            </th>
+
+                            <th>
+                                <span class="font-bold">  @Html.DisplayNameFor(model => model.Total_Amount)</span>
+                            </th>
+                            @*<th>
+                                    <span class="font-bold">  @Html.DisplayNameFor(model => model.Billing_Status)</span>
+                                </th>*@
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Bill_No, new { @class = "Bill_no" })
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Details","Bill_Data",new {id=item.Bill_No})">  @Html.DisplayFor(modelItem => item.Pid)</a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Bill_Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Doctor_Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Total_Amount, new { @class = "Total_Amount" })
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.Billing_Status)
+                                    </td>*@
+
+                                <td>
+                                    <a class="btn-rounded sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false" style="color:red" onclick="toggle()">
+                                        <i class="mdi mdi-delete " style="font-size:20px"></i>
+                                    </a>
+                                    <a class="btn-rounded sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Edit","Bill_Data",new {id=item.Bill_No})" aria-expanded="false" id="edit" name="edit">
+                                        <i class="mdi mdi-pencil" style="font-size:20px"></i>
+                                    </a>
+                                    <a class="btn-rounded sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false" href=@Url.Action("Invoice","Bill_Data",new { id=item.Bill_No})>
+                                        <i class="mdi mdi-receipt" style="font-size:20px"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="popup">
+    <h3>Are you sure, you want to delete Bill Details?</h3>
+    <h3></h3>
+    <div style="position: relative; display: flex; justify-content: space-around; align-items: stretch; padding:40px 0 0 0">
+        <a style="width:100px" class="btn btn-danger btn-rounded text-white" onclick="deletep()">Yes</a>
+        <a style="width: 100px" class="btn btn-info btn-rounded " onclick="toggle()">No</a>
+    </div>
+</div>
+
+@if (ViewBag.JavaScriptFunction != null)
+{
+    <script>
+    function edit() {
+            toastr.success('abc has been updated', 'Bill Details for');
+            setTimeout(nav, 1000);
+        }</script>
+}
+
+<script>
+        function deletep() {
+            save();
+            toggle();
+        }
+
+    function save() {
+        toastr.error('abc has been deleted', 'Bill Details for');
+        setTimeout(nav, 2000);
+        }
+
+
+        function nav() {
+            window.location.href = '@Url.Action("Index", "Bill_Data")';
+        }
+        function toggle() {
+            var blur = document.getElementById('blur');
+            blur.classList.toggle('active');
+            var popup = document.getElementById('popup');
+            popup.classList.toggle('active');
+        }
+</script>
+

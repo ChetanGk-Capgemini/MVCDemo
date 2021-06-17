@@ -1,0 +1,96 @@
+﻿@model MVC_Demo.Models.Inpatients
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h2 class="page-title">View InPatient</h2>
+            <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","DashBoard")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","InPatient")">InPatient</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">View Appointment</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin:10px 0 0 0">
+    <div class="col-12">
+        <div class="card">
+            <form class="form-horizontal">
+                <div class="card-body">
+                    <h4 class="card-title">Appointment Info</h4>
+                    <div class="form-group row">
+                        <label for="fname"
+                               class="col-sm-3 text-end control-label col-form-label">Patient Name</label>
+                        <div class="col-sm-5">
+                            @Html.EditorFor(model => model.Pid, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lname" class="col-sm-3 text-end control-label col-form-label">
+                            Room No
+                        </label>
+                        <div class="col-sm-5">
+                            @Html.EditorFor(model => model.Room_No, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lname"
+                               class="col-sm-3 text-end control-label col-form-label">Doctor</label>
+                        <div class="col-sm-5">
+                            @Html.EditorFor(model => model.Doctor_Id, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lname"
+                               class="col-sm-3 text-end control-label col-form-label">Admission Date</label>
+                        <div class="col-sm-5">
+                            <div class="input-group ">
+
+                                @Html.EditorFor(model => model.Admission_Date, new { htmlAttributes = new { @class = "form-control", id = "AdmissionDate", placeholder = "mm/dd/yyyy" } })
+                                <div class="input-group-append">
+                                    <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="form-group row align-content-between">
+                    <div class="card-body text-center">
+                        <a class="col-sm-2  btn btn-warning btn-rounded " href="@Url.Action("Index","InPatient")" style="color:black">Go Back</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="@Url.Content("~/Content/assets/libs/jquery/dist/jquery.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Content/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js")" type="text/javascript"></script>
+<script>
+    jQuery('#AdmissionDate').datepicker({
+            autoclose: true,
+            todayHighlight: true
+    });
+
+    function save() {
+        toastr.success('abc has been created', 'Appointment Details for');
+        setTimeout(nav, 2000);
+    }
+
+    function nav() {
+        window.location.href = '@Url.Action("Index", "Patient")';
+    }
+</script>

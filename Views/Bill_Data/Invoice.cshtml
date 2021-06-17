@@ -1,0 +1,156 @@
+﻿@using MVC_Demo.Models
+@{
+    var bill = ViewData["Bill"] as Bills;
+}
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Invoice</h4>
+            <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "DashBoard")">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Invoice</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" id="Grid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-body printableArea">
+                <h3>
+                    <b>INVOICE</b> <span class="pull-right">
+                        #@bill.Bill_No
+                    </span>
+                </h3>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-left">
+                            <address>
+                                <h3> &nbsp;<b class="text-danger">Capgemini Cares</b></h3>
+                                <p class="text-muted ms-1">
+                                    E 104, Dharti-2,
+                                    <br /> Nr' Viswakarma Temple,
+                                    <br /> White field,
+                                    <br /> Banglore - 560010
+                                </p>
+                            </address>
+                        </div>
+                        <div class="pull-right text-end">
+                            <address>
+                                <h3>To,</h3>
+                                <h4 class="font-bold">
+                                    @bill.Pid
+                                </h4>
+                                <p class="text-muted ms-4">
+                                    9977****45
+                                    <br />Address
+
+                                </p>
+                                <p class="mt-4">
+                                    <b>Invoice Date :</b> <i class="fa fa-calendar"></i>
+                                    @{
+                                        var date = bill.Bill_Date.Value.ToShortDateString();
+                                        var due = bill.Bill_Date.Value.AddDays(15).ToShortDateString();
+                                    }
+                                    @date
+                                </p>
+                                <p>
+                                    <b>Due Date :</b> <i class="fa fa-calendar"></i>
+                                    @due
+                                </p>
+                            </address>
+                        </div>
+                    </div>
+                    @{
+                        IDictionary<string, string> d = new Dictionary<string, string>();
+                        if (bill.Doctor_Fees > 0)
+                        {
+                            d.Add(new KeyValuePair<string, string>("Doctor Fees", bill.Doctor_Fees.Value.ToString("#.##")));
+                        }
+                        if (bill.Room_Charge > 0)
+                        {
+                            d.Add(new KeyValuePair<string, string>("Room Charge", bill.Room_Charge.Value.ToString("#.##")));
+                        }
+                        if (bill.Operation_Charges > 0)
+                        {
+                            d.Add(new KeyValuePair<string, string>("OperationCharges", bill.Operation_Charges.Value.ToString("#.##")));
+                        }
+                        if (bill.Medicine_Fees > 0)
+                        {
+                            d.Add(new KeyValuePair<string, string>("Medicine Charge", bill.Medicine_Fees.Value.ToString("#.##")));
+                        }
+                        if (bill.Lab_Fees > 0)
+                        {
+                            d.Add(new KeyValuePair<string, string>("Lab Charge", bill.Lab_Fees.Value.ToString("#.##")));
+                        }
+
+                        decimal tax = (decimal)0.18 * (bill.Total_Amount);
+                        var taxAmt = (bill.Total_Amount + tax);
+                    }
+                    <div class="col-md-12">
+                        <div class="table-responsive mt-5" style="clear: both;">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Description</th>
+
+                                        <th class="text-end">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (KeyValuePair<string, string> p in d)
+                                    {
+                                        <tr>
+                                            @{
+                                                var i = d.Keys.ToList().IndexOf(p.Key) + 1;
+                                        }
+                                        <td class="text-center">@i</td>
+                                        <td>@p.Key</td>
+
+                                        <td class="text-end"> $@p.Value</td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right mt-4 text-end">
+                            <p>Sub - Total amount: $@bill.Total_Amount.ToString("#.##")</p>
+                            <p>vat (18%) : $@tax.ToString("#.##") </p>
+                            <hr>
+                            <h3><b>Total :</b> $@taxAmt.ToString("#.##")</h3>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="text-end">
+                            <a id="btnSubmit" class="btn btn-danger text-white"  > Proceed to payment </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+

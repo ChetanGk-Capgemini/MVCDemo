@@ -1,0 +1,68 @@
+﻿@model MVC_Demo.Models.Doctors
+
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h2 class="page-title">Create Doctor</h2>
+            <div class="ms-auto text-end">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","DashBoard")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Doctor")">Doctor</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Create</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin:10px 0 0 0">
+    <div class="col-12">
+        <div class="card">
+            <form class="form-horizontal">
+                <div class="card-body">
+                    <h4 class="card-title">Doctor Info</h4>
+
+                    <div class="form-group row">
+                        <label for="lname" class="col-sm-3 text-end control-label col-form-label">
+                            Doctor Name
+                        </label>
+                        <div class="col-sm-5">
+                            @Html.EditorFor(model => model.Doctor_Name, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lname"
+                               class="col-sm-3 text-end control-label col-form-label">Department</label>
+                        <div class="col-sm-5">
+                            @Html.EditorFor(model => model.DeptId, new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <div class="form-group row align-content-between">
+                    <div class="card-body text-center">
+                        <a class="col-sm-2  btn btn-warning btn-rounded " href="@Url.Action("Index","Doctor")" style="color:black">Go Back</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function save() {
+        toastr.success('abc has been created', 'Doctor Details for');
+        setTimeout(nav, 2000);
+    }
+
+    function nav() {
+        window.location.href = '@Url.Action("Index", "Doctor")';
+    }
+</script>

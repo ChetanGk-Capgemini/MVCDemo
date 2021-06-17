@@ -1,0 +1,175 @@
+﻿@model IEnumerable<MVC_Demo.Models.Doctors>
+
+
+<div class="container" id="blur">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h2 class="page-title">Doctor</h2>
+                <div class="ms-auto text-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index", "DashBoard")">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Doctor</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin:10px 0 0 0">
+        <div class="card-body" style="margin: 0 0 0 50px">
+            <a class="  btn btn-warning btn-rounded " href="@Url.Action("Create", "Doctor")" style="color:black">Add New Doctor</a>
+        </div>
+    </div>
+
+    <div class="card" style="margin:10px 0 0 0">
+        <div class="card-body">
+            <h5 class="card-title">Data Base</h5>
+            <div class="table-responsive">
+                <table id="zero_config" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th><span class="font-bold">@Html.DisplayNameFor(model => model.Doctor_Id)  </span></th>
+                            <th><span class="font-bold">@Html.DisplayNameFor(model => model.Doctor_Name)</span></th>
+                            <th><span class="font-bold">@Html.DisplayNameFor(model => model.DeptId)     </span></th>
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Doctor_Id)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Details", "Doctor", new { doctor = item.Doctor_Id })">   @Html.DisplayFor(modelItem => item.Doctor_Name)</a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DeptId)
+                                </td>
+
+                                <td>
+                                    <script>
+
+                                    </script>
+                                    <a class="btn-rounded sidebar-link waves-effect waves-dark sidebar-link" onclick="setdelete(@item.Doctor_Id)" aria-expanded="false" style="color:red">
+                                        <i class="mdi mdi-delete " style="font-size:20px"></i>
+                                    </a>
+                                    <a class="btn-rounded sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false" href=@Url.Action("Edit", "Doctor", new { id = item.Doctor_Id })>
+                                        <i class="mdi mdi-pencil" style="font-size:20px"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+            </div>
+            <input type="hidden" id="hiddenEmployeeId" />
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hiddenEmployeeId" />
+<div id="popup">
+    <h3>Are you sure, you want to delete doctor?</h3>
+    <div style="position: relative; display: flex; justify-content: space-around; align-items: stretch; padding:40px 0 0 0">
+        <a style="width:100px" id="yes" class="btn btn-danger btn-rounded text-white" onclick="Pdelete()">Yes</a>
+        <a style="width:100px" id="no" class="btn btn-info btn-rounded " href="#" onclick="toggle()">No</a>
+    </div>
+</div>
+
+
+
+<script>
+	$(document).ready(function () {
+		var doctorId;
+
+	})
+
+	function setdelete(id) {
+		doctorId = id;
+		toggle();
+		console.log(id);
+		$("#hiddenEmployeeId").val(id);
+	}
+
+	function Pdelete() {
+		$.ajax({
+			type: "POST",
+			url: "/Doctor/Delete/" + doctorId,
+			/*data: JSON.stringify(Student),*/
+			dataType: "json" ,
+			contentType: 'application/json; charset=utf-8',
+			success: function (data) {
+
+			},
+
+		});
+		toggle();
+		nav();
+	}
+
+
+	function deletep() {
+		deleted();
+		toggle();
+	}
+	function toggle() {
+		var blur = document.getElementById('blur');
+		blur.classList.toggle('active');
+		var popup = document.getElementById('popup');
+		popup.classList.toggle('active');
+	}
+	function deleted() {
+		toastr.warning(' has been deleted', 'Doctor Details for');
+	}
+	function deletefail() {
+        toastr.error('failed', 'Doctor Delete ');
+		setTimeout(nav, 2000);
+	}
+	function edit() {
+        toastr.warning(' has been updated', 'Doctor Details for');
+	}
+	function save() {
+        toastr.success(' has been added', 'Doctor Details for');
+	}
+	function nav() {
+		window.location.href = '@Url.Action("Index", "Doctor")';
+	}
+    function httperror() {
+        toastr.warning('Connect to Database', 'Unable to');
+    }
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+		$(document).ready(function () {
+			if (@TempData["Doctor"] == "1") {
+				save.call();
+            }
+            if (@TempData["Doctor"] == "-1") {
+                httperror.call();
+			}
+			else if (@TempData["Doctor"] == "2") {
+				edit.call();
+			}
+			else if (@TempData["Doctor"] == "3") {
+				deleted.call();
+			}
+
+
+		console.log(@TempData["Doctor"])
+		})
+</script>
+}
+
