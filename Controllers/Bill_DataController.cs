@@ -15,7 +15,7 @@ namespace MVC_Demo.Controllers
         string Baseurl = "https://localhost:44354/DataAccess/Bills/";
         public ActionResult Index()
         {
-            
+
             List<Bills> bills = null;
             using (HttpClient client = new HttpClient())
             {
@@ -28,9 +28,6 @@ namespace MVC_Demo.Controllers
                 else
                 {
                     bills = null;
-
-
-
                 }
             }
             return View(bills);
@@ -129,6 +126,6 @@ namespace MVC_Demo.Controllers
             return View();
         }
 
-    
+
     }
 }

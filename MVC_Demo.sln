@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31402.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC_Demo", "MVC_Demo.csproj", "{438A6CA9-DB43-41C6-AF3B-6E777266AE84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiDemo", "..\..\wepapi1\WebApiDemo\WebApiDemo.csproj", "{EF400394-729E-49A0-8AC2-B13390A1004B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiDemo", "..\WebApiDemo\WebApiDemo.csproj", "{EF400394-729E-49A0-8AC2-B13390A1004B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
